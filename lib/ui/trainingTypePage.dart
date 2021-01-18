@@ -16,6 +16,45 @@ class _TrainingTypePageState extends State<TrainingTypePage> {
     Exercise(trainingName: "bacboon", time: 10, done: false),
     Exercise(trainingName: "bacboon", time: 10, done: true),
   ];
+  TextEditingController textEditingController;
+  TextEditingController textEditingController2;
+  int numberOfLiterOfWater;
+  int dalyWeight;
+
+  @override
+  void initState() {
+    numberOfLiterOfWater = 0;
+    dalyWeight = 0;
+    textEditingController =
+        TextEditingController(text: '$numberOfLiterOfWater');
+    textEditingController2 = TextEditingController(text: '$dalyWeight');
+    super.initState();
+  }
+
+  increaseNOLOWater() {
+    setState(() {
+      numberOfLiterOfWater++;
+    });
+  }
+
+  deccreaseNOLOWater() {
+    setState(() {
+      numberOfLiterOfWater--;
+    });
+  }
+
+  increaseDalyWeight() {
+    setState(() {
+      dalyWeight++;
+    });
+  }
+
+  decreaseDalyWeight() {
+    setState(() {
+      dalyWeight--;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context,
@@ -23,33 +62,68 @@ class _TrainingTypePageState extends State<TrainingTypePage> {
 
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 10.h),
-            height: 440.h,
-            color: Colors.greenAccent,
-            child: ListView.separated(
-                itemBuilder: (context, index) =>
-                    CustomContainer(exercise: exxersises[index]),
-                separatorBuilder: (context, index) => Divider(),
-                itemCount: exxersises.length),
-          ),
-          Column(
-            children: [
-              Container(
-                  height: 60.h,
-                  color: Colors.lightBlue,
-                  child: Row(children: [Text("Your waight 100")])),
-              Container(
-                  height: 60.h,
-                  color: Colors.lime,
-                  child: Row(
-                    children: [Text("Water ammount 10 l")],
-                  )),
-            ],
-          )
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 10.h),
+              height: 440.h,
+             // color: Colors.greenAccent,
+              child: ListView.separated(
+                  itemBuilder: (context, index) =>
+                      CustomContainer(exercise: exxersises[index]),
+                  separatorBuilder: (context, index) => Divider(),
+                  itemCount: exxersises.length),
+            ),
+            SizedBox(
+              child: Divider(),
+              height: 30.h,
+            ),
+            Column(
+              children: [
+                Container(
+                    height: 80.h,
+                    // color: Colors.lightBlue,
+                    child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text("Water Liter"),
+                          CustomeContainer3(
+                            textEditingController: textEditingController,
+                            decrease: deccreaseNOLOWater,
+                            increase: increaseNOLOWater,
+                          ),
+                        ])),
+                SizedBox(
+                  height: 1.h,
+                ),
+                Container(
+                    height: 80.h,
+                    //    color: Colors.lime,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text("your weight"),
+                        CustomeContainer3(
+                          textEditingController: textEditingController2,
+                          decrease: decreaseDalyWeight,
+                          increase: increaseDalyWeight,
+                        ),
+                      ],
+                    )),
+              ],
+            ),
+            SizedBox(
+              height: 30.h,
+            ),
+            RaisedButton(onPressed: () {
+              print(textEditingController.text);
+              print(textEditingController2.text);
+            }),
+          ],
+        ),
       ),
     );
   }
@@ -102,6 +176,66 @@ class CustomContainer extends StatelessWidget {
               borderRadius: BorderRadius.circular(50),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class cutomeContainer2 extends StatelessWidget {
+  TextEditingController textEditingController;
+  cutomeContainer2({this.textEditingController});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 55,
+      height: 50,
+      child: TextField(
+        textAlign: TextAlign.center,
+        controller: textEditingController,
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          hintText: '5',
+          hintStyle: TextStyle(fontSize: 16),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(50),
+            borderSide: BorderSide(
+              color: Colors.grey,
+              width: 1,
+              style: BorderStyle.none,
+            ),
+          ),
+          filled: true,
+          contentPadding: EdgeInsets.all(16),
+          fillColor: Colors.grey[200],
+        ),
+      ),
+    );
+  }
+}
+
+class CustomeContainer3 extends StatelessWidget {
+  TextEditingController textEditingController;
+  Function increase;
+  Function decrease;
+
+  CustomeContainer3({this.textEditingController, this.increase, this.decrease});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50.h,
+      child: Row(
+        children: [
+          IconButton(icon: Icon(Icons.add), onPressed: () => increase),
+          SizedBox(
+            width: 5.w,
+          ),
+          cutomeContainer2(textEditingController: textEditingController),
+          SizedBox(
+            width: 5.w,
+          ),
+          IconButton(icon: Icon(Icons.remove), onPressed: () {}),
         ],
       ),
     );
