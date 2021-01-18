@@ -61,8 +61,9 @@ class _TrainingTypePageState extends State<TrainingTypePage> {
         width: 360.0, height: 640.0, allowFontScaling: true);
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: Text("Exercises"),centerTitle: true,),
       body: SingleChildScrollView(
+
         child: Column(
           children: [
             Container(
