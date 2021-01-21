@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gym_app/models/exercise.dart';
+import 'package:flutter_gym_app/ui/indecator.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TrainingTypePage extends StatefulWidget {
@@ -61,75 +62,66 @@ class _TrainingTypePageState extends State<TrainingTypePage> {
         width: 360.0, height: 640.0, allowFontScaling: true);
 
     return Scaffold(
-      appBar: AppBar(title: Text("Exercises"),centerTitle: true,),
-      body: SingleChildScrollView(
-
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 10.h),
-              height: 440.h,
-             // color: Colors.greenAccent,
-              child: ListView.separated(
-                  itemBuilder: (context, index) =>
-                      CustomContainer(exercise: exxersises[index]),
-                  separatorBuilder: (context, index) => Divider(),
-                  itemCount: exxersises.length),
-            ),
-            SizedBox(
-              child: Divider(),
-              height: 30.h,
-            ),
-            Column(
-              children: [
-                Container(
-                    height: 80.h,
-                    // color: Colors.lightBlue,
-                    child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text("Water Liter"),
-                          CustomeContainer3(
-                            textEditingController: textEditingController,
-                            decrease: deccreaseNOLOWater,
-                            increase: increaseNOLOWater,
-                          ),
-                        ])),
-                SizedBox(
-                  height: 1.h,
-                ),
-                Container(
-                    height: 80.h,
-                    //    color: Colors.lime,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text("your weight"),
-                        CustomeContainer3(
-                          textEditingController: textEditingController2,
-                          decrease: decreaseDalyWeight,
-                          increase: increaseDalyWeight,
-                        ),
-                      ],
-                    )),
-              ],
-            ),
-            SizedBox(
-              height: 30.h,
-            ),
-            RaisedButton(onPressed: () {
-              print(textEditingController.text);
-              print(textEditingController2.text);
-            }),
-          ],
-        ),
+      appBar: AppBar(
+        title: Text("Exercises"),
+        centerTitle: true,
+      ),
+      body: Stack(
+        children: [
+          CustomeContainer1(exxersises),
+          CustomContainer4(
+              textEditingController1: textEditingController,
+              textEditingController2: textEditingController2,
+              increaseDalyWeight: increaseDalyWeight,
+              decreaseDalyWeight: decreaseDalyWeight,
+              increaseNOLOWater: increaseNOLOWater,
+              deccreaseNOLOWater: deccreaseNOLOWater),
+        ],
       ),
     );
   }
 }
 
+
+/// custome container for multy item (as list )
+class CustomeContainer1 extends StatefulWidget {
+    List exxersises;
+
+CustomeContainer1(this.exxersises);
+  @override
+  _CustomeContainer1State createState() => _CustomeContainer1State();
+}
+
+class _CustomeContainer1State extends State<CustomeContainer1> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+       child:SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 15.h,
+                  ),
+                  height: 515.h,
+                  // color: Colors.greenAccent,
+                  child: ListView.separated(
+                      itemBuilder: (context, index) =>
+                          CustomContainer(exercise: widget.exxersises[index]),
+                      separatorBuilder: (context, index) => Divider(),
+                      itemCount: widget.exxersises.length),
+                ),
+              
+              ],
+            ),
+          ),
+    );
+  }
+}
+
+
+/// custome container for Item of Excersises
 class CustomContainer extends StatelessWidget {
   Exercise exercise;
   CustomContainer({this.exercise});
@@ -138,37 +130,54 @@ class CustomContainer extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 4.h),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            height: 50,
-            width: 50,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/images/logo2.png'))),
-          ),
-          SizedBox(
-            width: 20.w,
-          ),
-          Column(
+          Row(
             children: [
-              Text(
-                "${exercise.trainingName}",
-                style: TextStyle(
-                  color: Colors.blue[300],
-                  fontSize: 18,
-                ),
+              Container(
+                height: 60,
+                width: 60,
+                decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage('assets/images/logo2.png'))),
               ),
               SizedBox(
-                height: 4.h,
+                width: 20.w,
               ),
-              Text("Time : ${exercise.time}",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14,
-                  )),
+              Column(
+                children: [
+                  Text(
+                    "${exercise.trainingName}",
+                    style: TextStyle(
+                      color: Colors.blue[300],
+                      fontSize: 18,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 4.h,
+                  ),
+                  Text("Time : ${exercise.time}",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      )),
+                ],
+              ),
             ],
           ),
-          Spacer(),
+          //  Spacer(),
+          Container(
+              height: 40,
+              width: 40,
+              child: Indecator(
+                size: 40.0,
+                beginvalue: 0.2,
+                endValue: 0.9,
+              )),
+
           Container(
             height: 10.h,
             width: 10.w,
@@ -183,6 +192,7 @@ class CustomContainer extends StatelessWidget {
   }
 }
 
+/// custome Container for  textfeaild (cercly circular)
 class cutomeContainer2 extends StatelessWidget {
   TextEditingController textEditingController;
   cutomeContainer2({this.textEditingController});
@@ -216,6 +226,7 @@ class cutomeContainer2 extends StatelessWidget {
   }
 }
 
+// cutome container for counter 
 class CustomeContainer3 extends StatelessWidget {
   TextEditingController textEditingController;
   Function increase;
@@ -239,6 +250,117 @@ class CustomeContainer3 extends StatelessWidget {
           IconButton(icon: Icon(Icons.remove), onPressed: () {}),
         ],
       ),
+    );
+  }
+}
+
+/// DraggableScreollableSheet  for more information about weight and Liter of water
+class CustomContainer4 extends StatelessWidget {
+  TextEditingController textEditingController1;
+  TextEditingController textEditingController2;
+  Function deccreaseNOLOWater;
+  Function increaseNOLOWater;
+  Function decreaseDalyWeight;
+  Function increaseDalyWeight;
+
+  CustomContainer4(
+      {this.textEditingController1,
+      this.textEditingController2,
+      this.increaseDalyWeight,
+      this.decreaseDalyWeight,
+      this.increaseNOLOWater,
+      this.deccreaseNOLOWater});
+  @override
+  Widget build(BuildContext context) {
+    return DraggableScrollableSheet(
+      initialChildSize: 0.1.h,
+      maxChildSize: 0.6.h,
+      minChildSize: 0.1.h,
+      expand: true,
+      builder: (context, scrollController) {
+        return Container(
+          child: SingleChildScrollView(
+            controller: scrollController,
+            child: Column(
+              children: [
+                Container(
+                  height: 8.h,
+                  width: 100.w,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                SizedBox(
+                  height: 50.h,
+                ),
+                Container(
+                    height: 80.h,
+                    child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text("Water Liter"),
+                          CustomeContainer3(
+                            textEditingController: textEditingController1,
+                            decrease: deccreaseNOLOWater,
+                            increase: increaseNOLOWater,
+                          ),
+                        ])),
+                SizedBox(
+                  height: 1.h,
+                ),
+                Container(
+                    height: 80.h,
+                    //    color: Colors.lime,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text("your weight"),
+                        CustomeContainer3(
+                          textEditingController: textEditingController2,
+                          decrease: decreaseDalyWeight,
+                          increase: increaseDalyWeight,
+                        ),
+                      ],
+                    )),
+                     SizedBox(
+                  height: 40.h,
+                ),
+                CustomeButton(),
+              ],
+            ),
+          ),
+          decoration: BoxDecoration(
+            color: Colors.blue[300],
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+
+/// custome button for submit the weight and Liter of water
+class CustomeButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 250.w,
+      height:35.h,
+      child: RaisedButton(
+        color: Colors.white,
+        child: Text("Submit"),
+              onPressed: () {},
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                  side: BorderSide(color: Colors.green)),
+            ),
     );
   }
 }

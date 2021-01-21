@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gym_app/ui/exercisesDetailsPage.dart';
+import 'package:flutter_gym_app/ui/indecator.dart';
 import 'package:flutter_gym_app/ui/splashPage.dart';
 
 import 'ui/homePage.dart';
@@ -21,8 +22,9 @@ class MyApp extends StatelessWidget {
       ),
      // home: SplashPage(),
      // home: HomePage(),
-     // home: TrainingTypePage(),
-     home: ExercisesDetailsPage(),
+      home: TrainingTypePage(),
+    // home: ExercisesDetailsPage(),
+    // home: Indecator(size: 50.0,beginvalue: 0.0,endValue: 0.9,),
     );
   }
 }
