@@ -1,59 +1,145 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gym_app/Providers/DBDayProvider.dart';
+import 'package:flutter_gym_app/Providers/trainingPageCounter.dart';
+import 'package:flutter_gym_app/models/day.dart';
 import 'package:flutter_gym_app/models/exercise.dart';
+import 'package:flutter_gym_app/services/DBExerciseHelper.dart';
 import 'package:flutter_gym_app/ui/indecator.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class TrainingTypePage extends StatefulWidget {
+  Day day;
+  TrainingTypePage({this.day});
+
   @override
   _TrainingTypePageState createState() => _TrainingTypePageState();
 }
 
 class _TrainingTypePageState extends State<TrainingTypePage> {
   List<Exercise> exxersises = [
-    Exercise(trainingName: "bacboon", time: 10, done: false),
-    Exercise(trainingName: "bacboon", time: 10, done: true),
-    Exercise(trainingName: "bacboon", time: 10, done: false),
-    Exercise(trainingName: "bacboon", time: 10, done: true),
-    Exercise(trainingName: "bacboon", time: 10, done: false),
-    Exercise(trainingName: "bacboon", time: 10, done: true),
+    Exercise(
+        trainingName: "Back",
+        day_id: 1,
+        done: 0,
+        burnsCalories: 100.0,
+        foodCalorise: 100.0,
+        reachedNumber: 2,
+        targetNumber: 120),
+    Exercise(
+        trainingName: "Leg ",
+        day_id: 1,
+        done: 0,
+        burnsCalories: 100.0,
+        foodCalorise: 100.0,
+        reachedNumber: 90,
+        targetNumber: 100),
+    Exercise(
+        trainingName: "Shoulders",
+        day_id: 1,
+        done: 0,
+        burnsCalories: 100.0,
+        foodCalorise: 100.0,
+        reachedNumber: 50,
+        targetNumber: 150),
+    Exercise(
+        trainingName: "Chest",
+        day_id: 1,
+        done: 0,
+        burnsCalories: 100.0,
+        foodCalorise: 100.0,
+        reachedNumber: 10,
+        targetNumber: 60),
+    Exercise(
+        trainingName: "Arm  ",
+        day_id: 1,
+        done: 0,
+        burnsCalories: 100.0,
+        foodCalorise: 100.0,
+        reachedNumber: 10,
+        targetNumber: 50),
+    Exercise(
+        trainingName: "Cardio",
+        day_id: 1,
+        done: 0,
+        burnsCalories: 100.0,
+        foodCalorise: 100.0,
+        reachedNumber: 10,
+        targetNumber: 50),
   ];
   TextEditingController textEditingController;
   TextEditingController textEditingController2;
   int numberOfLiterOfWater;
   int dalyWeight;
 
+  initExercises(int dayId) async {
+    List<Exercise> exxersises = [
+      Exercise(
+          trainingName: "Back",
+          day_id: dayId,
+          done: 0,
+          burnsCalories: 0.0,
+          foodCalorise: 0.0,
+          reachedNumber: 0,
+          targetNumber: 0),
+      Exercise(
+          trainingName: "Leg ",
+          day_id: dayId,
+          done: 0,
+          burnsCalories: 0.0,
+          foodCalorise: 0.0,
+          reachedNumber: 0,
+          targetNumber: 0),
+      Exercise(
+          trainingName: "Shoulders",
+          day_id: dayId,
+          done: 0,
+          burnsCalories: 0.0,
+          foodCalorise: 0.0,
+          reachedNumber: 0,
+          targetNumber: 0),
+      Exercise(
+          trainingName: "Chest",
+          day_id: dayId,
+          done: 0,
+          burnsCalories: 0.0,
+          foodCalorise: 0.0,
+          reachedNumber: 0,
+          targetNumber: 0),
+      Exercise(
+          trainingName: "Arm  ",
+          day_id: dayId,
+          done: 0,
+          burnsCalories: 0.0,
+          foodCalorise: 0.0,
+          reachedNumber: 0,
+          targetNumber: 0),
+      Exercise(
+          trainingName: "Cardio",
+          day_id: dayId,
+          done: 0,
+          burnsCalories: 0.0,
+          foodCalorise: 0.0,
+          reachedNumber: 0,
+          targetNumber: 0),
+    ];
+    await context.read<DBExerciseHelper>().insertInToDatabase(exxersises[0]);
+    await context.read<DBExerciseHelper>().insertInToDatabase(exxersises[1]);
+    await context.read<DBExerciseHelper>().insertInToDatabase(exxersises[2]);
+    await context.read<DBExerciseHelper>().insertInToDatabase(exxersises[3]);
+    await context.read<DBExerciseHelper>().insertInToDatabase(exxersises[4]);
+    await context.read<DBExerciseHelper>().insertInToDatabase(exxersises[5]);
+  }
+
   @override
   void initState() {
+    //  initExercises(widget.dayId);
     numberOfLiterOfWater = 0;
     dalyWeight = 0;
     textEditingController =
         TextEditingController(text: '$numberOfLiterOfWater');
     textEditingController2 = TextEditingController(text: '$dalyWeight');
     super.initState();
-  }
-
-  increaseNOLOWater() {
-    setState(() {
-      numberOfLiterOfWater++;
-    });
-  }
-
-  deccreaseNOLOWater() {
-    setState(() {
-      numberOfLiterOfWater--;
-    });
-  }
-
-  increaseDalyWeight() {
-    setState(() {
-      dalyWeight++;
-    });
-  }
-
-  decreaseDalyWeight() {
-    setState(() {
-      dalyWeight--;
-    });
   }
 
   @override
@@ -65,61 +151,58 @@ class _TrainingTypePageState extends State<TrainingTypePage> {
       appBar: AppBar(
         title: Text("Exercises"),
         centerTitle: true,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
       ),
       body: Stack(
         children: [
           CustomeContainer1(exxersises),
           CustomContainer4(
-              textEditingController1: textEditingController,
-              textEditingController2: textEditingController2,
-              increaseDalyWeight: increaseDalyWeight,
-              decreaseDalyWeight: decreaseDalyWeight,
-              increaseNOLOWater: increaseNOLOWater,
-              deccreaseNOLOWater: deccreaseNOLOWater),
+            day: widget.day,
+          ),
         ],
       ),
     );
   }
 }
 
-
 /// custome container for multy item (as list )
 class CustomeContainer1 extends StatefulWidget {
-    List exxersises;
+  List exxersises;
 
-CustomeContainer1(this.exxersises);
+  CustomeContainer1(this.exxersises);
   @override
   _CustomeContainer1State createState() => _CustomeContainer1State();
 }
 
 class _CustomeContainer1State extends State<CustomeContainer1> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
-       child:SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 15.h,
-                  ),
-                  height: 515.h,
-                  // color: Colors.greenAccent,
-                  child: ListView.separated(
-                      itemBuilder: (context, index) =>
-                          CustomContainer(exercise: widget.exxersises[index]),
-                      separatorBuilder: (context, index) => Divider(),
-                      itemCount: widget.exxersises.length),
-                ),
-              
-              ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(
+                vertical: 15.h,
+              ),
+              height: 515.h,
+              // color: Colors.greenAccent,
+              child: ListView.separated(
+                  itemBuilder: (context, index) =>
+                      CustomContainer(exercise: widget.exxersises[index]),
+                  separatorBuilder: (context, index) => Divider(),
+                  itemCount: widget.exxersises.length),
             ),
-          ),
+          ],
+        ),
+      ),
     );
   }
 }
-
 
 /// custome container for Item of Excersises
 class CustomContainer extends StatelessWidget {
@@ -159,7 +242,7 @@ class CustomContainer extends StatelessWidget {
                   SizedBox(
                     height: 4.h,
                   ),
-                  Text("Time : ${exercise.time}",
+                  Text("Tareget : ${exercise.targetNumber}",
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 14,
@@ -174,15 +257,15 @@ class CustomContainer extends StatelessWidget {
               width: 40,
               child: Indecator(
                 size: 40.0,
-                beginvalue: 0.2,
-                endValue: 0.9,
+                beginvalue: exercise.targetNumber * 0.01,
+                endValue: exercise.reachedNumber * 0.01,
               )),
 
           Container(
             height: 10.h,
             width: 10.w,
             decoration: BoxDecoration(
-              color: exercise.done == true ? Colors.red : Colors.green,
+              color: exercise.done != 1 ? Colors.red : Colors.green,
               borderRadius: BorderRadius.circular(50),
             ),
           ),
@@ -194,8 +277,11 @@ class CustomContainer extends StatelessWidget {
 
 /// custome Container for  textfeaild (cercly circular)
 class cutomeContainer2 extends StatelessWidget {
-  TextEditingController textEditingController;
-  cutomeContainer2({this.textEditingController});
+  int type;
+  Day day;
+  String textValue;
+  cutomeContainer2({this.textValue, this.day, this.type});
+  TextEditingController textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -206,8 +292,18 @@ class cutomeContainer2 extends StatelessWidget {
         textAlign: TextAlign.center,
         controller: textEditingController,
         keyboardType: TextInputType.number,
+        onChanged: (value) async {
+          int counter = int.parse(value);
+          if (type == 2) {
+            await context
+                .read<TainingPageCounterProvider>()
+                .setWaterCounter(counter);
+          } else if (type == 1) {
+            await context.read<TainingPageCounterProvider>().setwight(counter);
+          }
+        },
         decoration: InputDecoration(
-          hintText: '5',
+          hintText: '${textValue}',
           hintStyle: TextStyle(fontSize: 16),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(50),
@@ -226,28 +322,47 @@ class cutomeContainer2 extends StatelessWidget {
   }
 }
 
-// cutome container for counter 
+// cutome container for counter
 class CustomeContainer3 extends StatelessWidget {
-  TextEditingController textEditingController;
-  Function increase;
-  Function decrease;
+  int type;
+  Day day;
 
-  CustomeContainer3({this.textEditingController, this.increase, this.decrease});
+  CustomeContainer3({this.type, this.day});
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 50.h,
       child: Row(
         children: [
-          IconButton(icon: Icon(Icons.add), onPressed: () => increase),
+          Consumer<TainingPageCounterProvider>(builder: (_, value, child) {
+            return IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () => type != 1
+                    ? value.incrementLiterOfWater()
+                    : value.incrementweight());
+          }),
           SizedBox(
             width: 5.w,
           ),
-          cutomeContainer2(textEditingController: textEditingController),
+          Consumer<TainingPageCounterProvider>(builder: (_, value, child) {
+            return cutomeContainer2(
+              textValue: type != 1
+                  ? '${value.literOfWaterCounter}'
+                  : '${value.weightCounter}',
+              type: type,
+              day: day,
+            );
+          }),
           SizedBox(
             width: 5.w,
           ),
-          IconButton(icon: Icon(Icons.remove), onPressed: () {}),
+          Consumer<TainingPageCounterProvider>(builder: (_, value, child) {
+            return IconButton(
+                icon: Icon(Icons.remove),
+                onPressed: () => type != 1
+                    ? value.decrementLiterOfWater()
+                    : value.decrementweight());
+          }),
         ],
       ),
     );
@@ -256,20 +371,8 @@ class CustomeContainer3 extends StatelessWidget {
 
 /// DraggableScreollableSheet  for more information about weight and Liter of water
 class CustomContainer4 extends StatelessWidget {
-  TextEditingController textEditingController1;
-  TextEditingController textEditingController2;
-  Function deccreaseNOLOWater;
-  Function increaseNOLOWater;
-  Function decreaseDalyWeight;
-  Function increaseDalyWeight;
-
-  CustomContainer4(
-      {this.textEditingController1,
-      this.textEditingController2,
-      this.increaseDalyWeight,
-      this.decreaseDalyWeight,
-      this.increaseNOLOWater,
-      this.deccreaseNOLOWater});
+  Day day;
+  CustomContainer4({this.day});
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
@@ -302,9 +405,8 @@ class CustomContainer4 extends StatelessWidget {
                         children: [
                           Text("Water Liter"),
                           CustomeContainer3(
-                            textEditingController: textEditingController1,
-                            decrease: deccreaseNOLOWater,
-                            increase: increaseNOLOWater,
+                            day: day,
+                            type: 1,
                           ),
                         ])),
                 SizedBox(
@@ -319,16 +421,17 @@ class CustomContainer4 extends StatelessWidget {
                       children: [
                         Text("your weight"),
                         CustomeContainer3(
-                          textEditingController: textEditingController2,
-                          decrease: decreaseDalyWeight,
-                          increase: increaseDalyWeight,
+                          day: day,
+                          type: 2,
                         ),
                       ],
                     )),
-                     SizedBox(
+                SizedBox(
                   height: 40.h,
                 ),
-                CustomeButton(),
+                CustomeButton(
+                  day: day,
+                ),
               ],
             ),
           ),
@@ -345,22 +448,55 @@ class CustomContainer4 extends StatelessWidget {
   }
 }
 
-
 /// custome button for submit the weight and Liter of water
 class CustomeButton extends StatelessWidget {
+  Day day;
+  CustomeButton({this.day});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 250.w,
-      height:35.h,
+      height: 35.h,
       child: RaisedButton(
         color: Colors.white,
         child: Text("Submit"),
-              onPressed: () {},
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                  side: BorderSide(color: Colors.green)),
-            ),
+        onPressed: () async {
+          await context.read<DBDayProvider>().updateDay(day);
+
+//customeAlertDialoge();
+        },
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+            side: BorderSide(color: Colors.green)),
+      ),
+    );
+  }
+}
+
+customeAlertDialoge() {
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("cancl"),
+      onPressed: () {},
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("successfully"),
+      content: Text("Submitted successfully"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

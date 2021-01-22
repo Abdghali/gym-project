@@ -9,12 +9,12 @@ class ReportPage extends StatefulWidget {
   _ReportPageState createState() => _ReportPageState();
 }
  List<Exercise> exxersises = [
-    Exercise(trainingName: "bacboon", time: 10, done: false),
-    Exercise(trainingName: "bacboon", time: 10, done: true),
-    Exercise(trainingName: "bacboon", time: 10, done: false),
-    Exercise(trainingName: "bacboon", time: 10, done: true),
-    Exercise(trainingName: "bacboon", time: 10, done: false),
-    Exercise(trainingName: "bacboon", time: 10, done: true),
+    // Exercise(trainingName: "bacboon", time: 10, done: false),
+    // Exercise(trainingName: "bacboon", time: 10, done: true),
+    // Exercise(trainingName: "bacboon", time: 10, done: false),
+    // Exercise(trainingName: "bacboon", time: 10, done: true),
+    // Exercise(trainingName: "bacboon", time: 10, done: false),
+    // Exercise(trainingName: "bacboon", time: 10, done: true),
   ];
 class _ReportPageState extends State<ReportPage> {
   @override
@@ -108,7 +108,7 @@ class CustomContainer extends StatelessWidget {
                   SizedBox(
                     height: 4.h,
                   ),
-                  Text("Time : ${exercise.time}",
+                  Text("Time : ${exercise.trainingName}",
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 14,
