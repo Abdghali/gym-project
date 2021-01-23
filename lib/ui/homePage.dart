@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gym_app/Providers/DBDayProvider.dart';
+import 'package:flutter_gym_app/Providers/DBExerciseProvider.dart';
+import 'package:flutter_gym_app/Providers/trainingPageCounter.dart';
 import 'package:flutter_gym_app/models/day.dart';
 import 'package:flutter_gym_app/models/exercise.dart';
 import 'package:flutter_gym_app/services/DBExerciseHelper.dart';
@@ -16,11 +18,68 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Day> days = [];
-
   getAllDays() async {
     await context.read<DBDayProvider>().getAllDays();
   }
 
+  initExercises(int dayId) async {
+    List<Exercise> exxersises = [
+      Exercise(
+          trainingName: "Back",
+          day_id: dayId,
+          done: 0,
+          burnsCalories: 0.0,
+          foodCalorise: 0.0,
+          reachedNumber: 0,
+          targetNumber: 0),
+      Exercise(
+          trainingName: "Leg ",
+          day_id: dayId,
+          done: 0,
+          burnsCalories: 0.0,
+          foodCalorise: 0.0,
+          reachedNumber: 0,
+          targetNumber: 0),
+      Exercise(
+          trainingName: "Shoulders",
+          day_id: dayId,
+          done: 0,
+          burnsCalories: 0.0,
+          foodCalorise: 0.0,
+          reachedNumber: 0,
+          targetNumber: 0),
+      Exercise(
+          trainingName: "Chest",
+          day_id: dayId,
+          done: 0,
+          burnsCalories: 0.0,
+          foodCalorise: 0.0,
+          reachedNumber: 0,
+          targetNumber: 0),
+      Exercise(
+          trainingName: "Arm  ",
+          day_id: dayId,
+          done: 0,
+          burnsCalories: 0.0,
+          foodCalorise: 0.0,
+          reachedNumber: 0,
+          targetNumber: 0),
+      Exercise(
+          trainingName: "Cardio",
+          day_id: dayId,
+          done: 0,
+          burnsCalories: 0.0,
+          foodCalorise: 0.0,
+          reachedNumber: 0,
+          targetNumber: 0),
+    ];
+    await context.read<DBExerciseProvider>().insertIntoDatabase(exxersises[0]);
+    await context.read<DBExerciseProvider>().insertIntoDatabase(exxersises[1]);
+    await context.read<DBExerciseProvider>().insertIntoDatabase(exxersises[2]);
+    await context.read<DBExerciseProvider>().insertIntoDatabase(exxersises[3]);
+    await context.read<DBExerciseProvider>().insertIntoDatabase(exxersises[4]);
+    await context.read<DBExerciseProvider>().insertIntoDatabase(exxersises[5]);
+  }
 
   @override
   void initState() {
@@ -31,7 +90,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     //Provider.of<DBDayProvider>(context, listen: true);
-    BuildContext context11= context;
     ScreenUtil.init(context,
         width: 360.0, height: 640.0, allowFontScaling: true);
     return days == null
@@ -45,11 +103,24 @@ class _HomePageState extends State<HomePage> {
               builder: (_, value, child) {
                 return ListView.separated(
                     itemBuilder: (context, index) => InkWell(
-                        onTap: () {
+                        onTap: () async {
                           print(value.dayes[index].weight);
-                      //    initExercises(value.dayes[index].id,context11);
-                          Get.to(
-                              TrainingTypePage(day:value.dayes[index]));
+                          await context
+                              .read<TainingPageCounterProvider>()
+                              .setWaterCounter(value.dayes[index].literOfWater);
+                          await context
+                              .read<TainingPageCounterProvider>()
+                              .setwight(value.dayes[index].weight);
+                          dynamic values = await context
+                              .read<DBExerciseProvider>()
+                              .isExsisteInDatabase(
+                                  value.dayes[index].id);
+                          print(values);
+                          if (values == 0) {
+                            await initExercises(value.dayes[index].id);
+                          } else {}
+
+                          Get.to(TrainingTypePage(day: value.dayes[index]));
                         },
                         child: CustomeContainer(value.dayes[index])),
                     separatorBuilder: (context, index) => Divider(),
@@ -66,7 +137,6 @@ class _HomePageState extends State<HomePage> {
                     dateOfDate: date,
                     weight: 0,
                     literOfWater: 0.0);
-
                 await context.read<DBDayProvider>().insertIntoDatabase(day);
               },
               child: Icon(Icons.add),

@@ -24,12 +24,11 @@ Exercise.fromMap(Map<String, dynamic> map) {
 
   Map<String, dynamic> toMap() {
     return {
-      DBExerciseHelper.id: id,
-     DBExerciseHelper.day_id: day_id,
-     DBExerciseHelper.trainingNam: trainingName,
+      DBExerciseHelper.day_id: day_id,
+      DBExerciseHelper.trainingNam: trainingName,
       DBExerciseHelper.targetNumber: targetNumber,
-    DBExerciseHelper.reachedNumber: reachedNumber,
-      DBExerciseHelper.reachedNumber: foodCalorise,
+      DBExerciseHelper.reachedNumber: reachedNumber,
+      DBExerciseHelper.foodCalorise: foodCalorise,
       DBExerciseHelper.burnsCalories: burnsCalories,
       DBExerciseHelper.done: done,
     };

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gym_app/Providers/DBDayProvider.dart';
+import 'package:flutter_gym_app/Providers/DBExerciseProvider.dart';
 import 'package:flutter_gym_app/Providers/trainingPageCounter.dart';
 import 'package:flutter_gym_app/models/day.dart';
 import 'package:flutter_gym_app/models/exercise.dart';
 import 'package:flutter_gym_app/services/DBExerciseHelper.dart';
+import 'package:flutter_gym_app/ui/exercisesDetailsPage.dart';
 import 'package:flutter_gym_app/ui/indecator.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 class TrainingTypePage extends StatefulWidget {
   Day day;
@@ -17,131 +20,6 @@ class TrainingTypePage extends StatefulWidget {
 }
 
 class _TrainingTypePageState extends State<TrainingTypePage> {
-  List<Exercise> exxersises = [
-    Exercise(
-        trainingName: "Back",
-        day_id: 1,
-        done: 0,
-        burnsCalories: 100.0,
-        foodCalorise: 100.0,
-        reachedNumber: 2,
-        targetNumber: 120),
-    Exercise(
-        trainingName: "Leg ",
-        day_id: 1,
-        done: 0,
-        burnsCalories: 100.0,
-        foodCalorise: 100.0,
-        reachedNumber: 90,
-        targetNumber: 100),
-    Exercise(
-        trainingName: "Shoulders",
-        day_id: 1,
-        done: 0,
-        burnsCalories: 100.0,
-        foodCalorise: 100.0,
-        reachedNumber: 50,
-        targetNumber: 150),
-    Exercise(
-        trainingName: "Chest",
-        day_id: 1,
-        done: 0,
-        burnsCalories: 100.0,
-        foodCalorise: 100.0,
-        reachedNumber: 10,
-        targetNumber: 60),
-    Exercise(
-        trainingName: "Arm  ",
-        day_id: 1,
-        done: 0,
-        burnsCalories: 100.0,
-        foodCalorise: 100.0,
-        reachedNumber: 10,
-        targetNumber: 50),
-    Exercise(
-        trainingName: "Cardio",
-        day_id: 1,
-        done: 0,
-        burnsCalories: 100.0,
-        foodCalorise: 100.0,
-        reachedNumber: 10,
-        targetNumber: 50),
-  ];
-  TextEditingController textEditingController;
-  TextEditingController textEditingController2;
-  int numberOfLiterOfWater;
-  int dalyWeight;
-
-  initExercises(int dayId) async {
-    List<Exercise> exxersises = [
-      Exercise(
-          trainingName: "Back",
-          day_id: dayId,
-          done: 0,
-          burnsCalories: 0.0,
-          foodCalorise: 0.0,
-          reachedNumber: 0,
-          targetNumber: 0),
-      Exercise(
-          trainingName: "Leg ",
-          day_id: dayId,
-          done: 0,
-          burnsCalories: 0.0,
-          foodCalorise: 0.0,
-          reachedNumber: 0,
-          targetNumber: 0),
-      Exercise(
-          trainingName: "Shoulders",
-          day_id: dayId,
-          done: 0,
-          burnsCalories: 0.0,
-          foodCalorise: 0.0,
-          reachedNumber: 0,
-          targetNumber: 0),
-      Exercise(
-          trainingName: "Chest",
-          day_id: dayId,
-          done: 0,
-          burnsCalories: 0.0,
-          foodCalorise: 0.0,
-          reachedNumber: 0,
-          targetNumber: 0),
-      Exercise(
-          trainingName: "Arm  ",
-          day_id: dayId,
-          done: 0,
-          burnsCalories: 0.0,
-          foodCalorise: 0.0,
-          reachedNumber: 0,
-          targetNumber: 0),
-      Exercise(
-          trainingName: "Cardio",
-          day_id: dayId,
-          done: 0,
-          burnsCalories: 0.0,
-          foodCalorise: 0.0,
-          reachedNumber: 0,
-          targetNumber: 0),
-    ];
-    await context.read<DBExerciseHelper>().insertInToDatabase(exxersises[0]);
-    await context.read<DBExerciseHelper>().insertInToDatabase(exxersises[1]);
-    await context.read<DBExerciseHelper>().insertInToDatabase(exxersises[2]);
-    await context.read<DBExerciseHelper>().insertInToDatabase(exxersises[3]);
-    await context.read<DBExerciseHelper>().insertInToDatabase(exxersises[4]);
-    await context.read<DBExerciseHelper>().insertInToDatabase(exxersises[5]);
-  }
-
-  @override
-  void initState() {
-    //  initExercises(widget.dayId);
-    numberOfLiterOfWater = 0;
-    dalyWeight = 0;
-    textEditingController =
-        TextEditingController(text: '$numberOfLiterOfWater');
-    textEditingController2 = TextEditingController(text: '$dalyWeight');
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context,
@@ -159,7 +37,7 @@ class _TrainingTypePageState extends State<TrainingTypePage> {
       ),
       body: Stack(
         children: [
-          CustomeContainer1(exxersises),
+          CustomeContainer1(widget.day.id),
           CustomContainer4(
             day: widget.day,
           ),
@@ -171,35 +49,51 @@ class _TrainingTypePageState extends State<TrainingTypePage> {
 
 /// custome container for multy item (as list )
 class CustomeContainer1 extends StatefulWidget {
-  List exxersises;
-
-  CustomeContainer1(this.exxersises);
+  int day_id;
+  CustomeContainer1(this.day_id);
   @override
   _CustomeContainer1State createState() => _CustomeContainer1State();
 }
 
 class _CustomeContainer1State extends State<CustomeContainer1> {
+  getAlllWxcersise() async {
+    await context.read<DBExerciseProvider>().getAllExercises(widget.day_id);
+  }
+
+  @override
+  void setState(fn) {
+    getAlllWxcersise();
+    super.setState(fn);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(
-                vertical: 15.h,
+      child: Consumer<DBExerciseProvider>(builder: (_, value, child) {
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: 15.h,
+                ),
+                height: 515.h,
+                // color: Colors.greenAccent,
+                child: ListView.separated(
+                    itemBuilder: (context, index) =>
+                        InkWell(
+                          onTap: (){
+                            Get.to(ExercisesDetailsPage(widget.day_id,value.exercises[index].id));
+                          },
+                          
+                          child: CustomContainer(exercise: value.exercises[index])),
+                    separatorBuilder: (context, index) => Divider(),
+                    itemCount: value.exercises.length),
               ),
-              height: 515.h,
-              // color: Colors.greenAccent,
-              child: ListView.separated(
-                  itemBuilder: (context, index) =>
-                      CustomContainer(exercise: widget.exxersises[index]),
-                  separatorBuilder: (context, index) => Divider(),
-                  itemCount: widget.exxersises.length),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }
@@ -242,7 +136,7 @@ class CustomContainer extends StatelessWidget {
                   SizedBox(
                     height: 4.h,
                   ),
-                  Text("Tareget : ${exercise.targetNumber}",
+                  Text("Tareget : ${exercise.targetNumber}    ",
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 14,
@@ -293,12 +187,12 @@ class cutomeContainer2 extends StatelessWidget {
         controller: textEditingController,
         keyboardType: TextInputType.number,
         onChanged: (value) async {
-          int counter = int.parse(value);
-          if (type == 2) {
+          double counter = double.parse(value);
+          if (type == 1) {
             await context
                 .read<TainingPageCounterProvider>()
                 .setWaterCounter(counter);
-          } else if (type == 1) {
+          } else if (type == 2) {
             await context.read<TainingPageCounterProvider>().setwight(counter);
           }
         },
@@ -337,7 +231,7 @@ class CustomeContainer3 extends StatelessWidget {
           Consumer<TainingPageCounterProvider>(builder: (_, value, child) {
             return IconButton(
                 icon: Icon(Icons.add),
-                onPressed: () => type != 1
+                onPressed: () => type != 2
                     ? value.incrementLiterOfWater()
                     : value.incrementweight());
           }),
@@ -346,7 +240,7 @@ class CustomeContainer3 extends StatelessWidget {
           ),
           Consumer<TainingPageCounterProvider>(builder: (_, value, child) {
             return cutomeContainer2(
-              textValue: type != 1
+              textValue: type != 2
                   ? '${value.literOfWaterCounter}'
                   : '${value.weightCounter}',
               type: type,
@@ -359,7 +253,7 @@ class CustomeContainer3 extends StatelessWidget {
           Consumer<TainingPageCounterProvider>(builder: (_, value, child) {
             return IconButton(
                 icon: Icon(Icons.remove),
-                onPressed: () => type != 1
+                onPressed: () => type != 2
                     ? value.decrementLiterOfWater()
                     : value.decrementweight());
           }),
@@ -403,7 +297,7 @@ class CustomContainer4 extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text("Water Liter"),
+                          Text("Liter of water"),
                           CustomeContainer3(
                             day: day,
                             type: 1,
@@ -462,7 +356,23 @@ class CustomeButton extends StatelessWidget {
         color: Colors.white,
         child: Text("Submit"),
         onPressed: () async {
-          await context.read<DBDayProvider>().updateDay(day);
+          double literOfWater = await context
+              .read<TainingPageCounterProvider>()
+              .literOfWaterCounter;
+          double wight =
+              await context.read<TainingPageCounterProvider>().weightCounter;
+          await context.read<DBDayProvider>().updateDay(Day(
+                id: day.id,
+                dayName: day.dayName,
+                dateOfDate: day.dateOfDate,
+                literOfWater: literOfWater,
+                weight: wight,
+              ));
+
+          print(
+              'liter of water ${await context.read<TainingPageCounterProvider>().literOfWaterCounter}');
+          print(
+              ' wight = ${await context.read<TainingPageCounterProvider>().weightCounter}');
 
 //customeAlertDialoge();
         },

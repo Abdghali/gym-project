@@ -4,7 +4,11 @@ import 'package:flutter_gym_app/services/DBHelper.dart';
 
 class DBDayProvider extends ChangeNotifier {
   List<Day> dayes = [];
+int dayId;
 
+setDayId(id){
+  this.dayId=id;
+}
  fillList(List<Day> _day) {
     this.dayes = _day;
     notifyListeners();
@@ -20,7 +24,9 @@ class DBDayProvider extends ChangeNotifier {
     List<Day> listOfDays = rows.map((e) => Day.fromMap(e)).toList();
     fillList(listOfDays);
   }
-
+getOneDayFromDatabase(int dayId)async{
+ Map<String, dynamic> rows =await DBDayHelper.dbDayHelper.getOnePersonFromDatabase(dayId);
+}
 updateDay(Day day) async {
     await DBDayHelper.dbDayHelper.updateDataInDatabase(day);
     getAllDays();

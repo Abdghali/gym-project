@@ -67,7 +67,7 @@ class DBDayHelper {
           limit: 1);
       Map<String, dynamic> result =
           listResult != null ? listResult.first : null;
-      print(result);
+         return result;
     } on Exception catch (e) {
       print(e);
     }
@@ -77,8 +77,9 @@ class DBDayHelper {
     database.delete(daytable, where: 'id=?', whereArgs: [dayId]);
   }
 
-  updateDataInDatabase(Day day) {
-    database.update(daytable, day.toMap(), where: 'id=?', whereArgs: [day.id]);
+  updateDataInDatabase(Day day)async {
+
+  database.update(daytable, day.toMap(), where: 'id=?', whereArgs: [day.id]);
   }
 
   deleteAllFromDatabase() {

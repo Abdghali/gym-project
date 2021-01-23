@@ -17,7 +17,7 @@ class DBExerciseHelper {
   static String foodCalorise="foodCalorise";
   static String burnsCalories="burnsCalories";
   static String done="done";
-  static String exercisetable = 'exercisetable';
+  static String exercisetable = 'exercisetable1';
 
   Database database;
 
@@ -30,7 +30,7 @@ class DBExerciseHelper {
   Future<Database> connectToDatabase() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String appDocPath = appDocDir.path; // get
-    String databasePath = join(appDocPath, 'gym.db'); // to create db path
+    String databasePath = join(appDocPath, 'gym1.db'); // to create db path
     Database database =
         await openDatabase(databasePath, version: 1, onCreate: (db, version) {
       createTable(db);
@@ -41,13 +41,9 @@ class DBExerciseHelper {
   createTable(Database db) {
     db.execute(
         '''CREATE TABLE $exercisetable (id INTEGER PRIMARY KEY AUTOINCREMENT,
-        $day_id INTEGER ,
-        $trainingNam TEXT NOT NULL,
-        $targetNumber INTEGER,
-        $reachedNumber INTEGER,
-        $foodCalorise Double,
-        $burnsCalories Double,
-        $done INTEGER)''');
+        $day_id INTEGER,$trainingNam TEXT NOT NULL,
+        $targetNumber INTEGER,$reachedNumber INTEGER,
+        $foodCalorise Double,$burnsCalories Double,$done INTEGER)''');
   }
 
   insertInToDatabase(Exercise exercise) async {
@@ -58,27 +54,44 @@ class DBExerciseHelper {
       print(e);
     }
   }
+  
 
-  Future<List<Map<String, dynamic>>> getAllexerciseDataFromDatabase() async {
+  Future<List<Map<String, dynamic>>> getAllexerciseDataFromDatabase(int dayId) async {
     try {
-      List<Map<String, dynamic>> allexercise = await database.query(exercisetable);
+      List<Map<String, dynamic>> allexercise = await database.query(exercisetable,where: "$day_id=?",whereArgs: [dayId]);
       return allexercise;
     } on Exception catch (e) {
       print(e);
     }
   }
 
-  getOneexerciseFromDatabase(int allexerciseId) async {
+  getOneexerciseFromDatabase(int dayId) async {
     try {
       List<Map<String, dynamic>> listResult = await database.query(exercisetable,
-          where: '$id=?',
-          whereArgs: [allexerciseId],
+          where: '$day_id=?',
+          whereArgs: [day_id],
           // columns: [name, age, gender],
           distinct: true,
           limit: 1);
       Map<String, dynamic> result =
           listResult != null ? listResult.first : null;
       print(result);
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
+  isExsisteInDatabase(int dayId) async {
+    try {
+      List<Map<String, dynamic>> listResult = await database.query(exercisetable,
+          where: '$day_id=?',
+          whereArgs: [dayId],
+          // columns: [name, age, gender],
+          distinct: true,
+          limit: 1);
+          print('length ${listResult.length}');
+      Map<String, dynamic> result =
+          listResult.length== 0 ? {'id':1} : {'id':0};
+    return listResult.length;
     } on Exception catch (e) {
       print(e);
     }

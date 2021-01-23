@@ -7,6 +7,8 @@ import 'package:flutter_gym_app/services/DBHelper.dart';
 import 'package:flutter_gym_app/ui/homePage.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
+import 'package:flutter_gym_app/ui/testPage.dart';
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
    await DBDayHelper.dbDayHelper.initDatabase();
@@ -42,6 +44,7 @@ class MyApp extends StatelessWidget {
           // home: ReportPage(),
           // home: ExercisesDetailsPage(),
           // home: Indecator(size: 50.0,beginvalue: 0.0,endValue: 0.9,),
+          //home: TestPage1(),
           ));
         }
       }

@@ -3,16 +3,16 @@ import 'package:flutter/cupertino.dart';
 
 class TainingPageCounterProvider extends ChangeNotifier{
 
-int weightCounter =0;
-int literOfWaterCounter =0;
+double weightCounter =0.0;
+double literOfWaterCounter =0.0;
 
 
-setwight(int number){
+setwight(double number){
 weightCounter=number;
 notifyListeners();
 }
 
-setWaterCounter(number){
+setWaterCounter(double number){
 literOfWaterCounter = number;
   notifyListeners();
 }

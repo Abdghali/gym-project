@@ -3,15 +3,16 @@ import 'package:flutter_gym_app/utilities/customTextStyle.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ExercisesDetailsPage extends StatefulWidget {
+
+  int dayId;
+  int exId;
+  ExercisesDetailsPage(this.dayId,this.exId);
   @override
   _ExercisesDetailsPageState createState() => _ExercisesDetailsPageState();
 }
 
 class _ExercisesDetailsPageState extends State<ExercisesDetailsPage> {
-  TextEditingController textEditingController1;
-  TextEditingController textEditingController2;
-  TextEditingController textEditingController3;
-  TextEditingController textEditingController4;
+ 
   int number=0;
   double   weight=0;
   double caloriesBurned=0;
@@ -42,7 +43,6 @@ class _ExercisesDetailsPageState extends State<ExercisesDetailsPage> {
               height: 50.h,
             ),
             CustomeContainer1(
-              textEditingController: textEditingController1,
               title: 'Number :',
               increase: numberIncrease,
               decrease: numberDecrease,
@@ -51,7 +51,6 @@ class _ExercisesDetailsPageState extends State<ExercisesDetailsPage> {
               height: 40.h,
             ),
             CustomeContainer1(
-                textEditingController: textEditingController2,
                 title: "Thee weight :",
                 increase: numberIncrease,
                 decrease: weightDecrease,
@@ -60,7 +59,6 @@ class _ExercisesDetailsPageState extends State<ExercisesDetailsPage> {
               height: 40.h,
             ),
             CustomeContainer1(
-              textEditingController: textEditingController3,
               title: "Calories burned :",
               increase: caloriesBurnedIncrease,
               decrease: caloriesBurnedDecrease,
@@ -69,7 +67,6 @@ class _ExercisesDetailsPageState extends State<ExercisesDetailsPage> {
               height: 40.h,
             ),
             CustomeContainer1(
-              textEditingController: textEditingController4,
               title: "Food Calories :",
               increase: caloriesFoodBIncrease,
               decrease: caloriesFoodDecrease,

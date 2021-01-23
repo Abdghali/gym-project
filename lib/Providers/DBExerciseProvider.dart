@@ -11,24 +11,32 @@ class DBExerciseProvider extends ChangeNotifier {
   }
 
   insertIntoDatabase(Exercise exercise) async {
-    await DBExerciseHelper.dbexerciseHelper.insertInToDatabase(exercise);
-    getAllDays();
+   await DBExerciseHelper.dbexerciseHelper.insertInToDatabase(exercise);
+   getAllExercises(exercise.day_id);
   }
-  getAllDays() async {
+  getAllExercises(int day_id) async {
     List<Map<String, dynamic>> rows =
-        await DBExerciseHelper.dbexerciseHelper.getAllexerciseDataFromDatabase();
+        await DBExerciseHelper.dbexerciseHelper.getAllexerciseDataFromDatabase(day_id);
     List<Exercise> listOfexcersise = rows.map((e) => Exercise.fromMap(e)).toList();
     fillList(listOfexcersise);
   }
 
-updateDay(Exercise exercise) async {
+getOneexerciseFromDatabase(int dayId)async{
+ return await DBExerciseHelper.dbexerciseHelper.getOneexerciseFromDatabase(dayId);
+}
+isExsisteInDatabase(int dayId)async{
+ return await DBExerciseHelper.dbexerciseHelper.isExsisteInDatabase(dayId);
+}
+
+
+updateExercise(Exercise exercise) async {
     await  DBExerciseHelper.dbexerciseHelper.updateDataInDatabase(exercise);
-    getAllDays();
+   // getAllExercises();
   }
 
- deleteDay(Exercise exercise) async {
+ deleteExercise(Exercise exercise) async {
    await DBExerciseHelper.dbexerciseHelper.deleteOneExerciseFromDatabase(exercise.id);
-    getAllDays();
+  //  getAllExercises();
   }
 
 }
