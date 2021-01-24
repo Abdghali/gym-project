@@ -5,6 +5,7 @@ import 'package:flutter_gym_app/Providers/trainingPageCounter.dart';
 import 'package:flutter_gym_app/models/day.dart';
 import 'package:flutter_gym_app/models/exercise.dart';
 import 'package:flutter_gym_app/services/DBExerciseHelper.dart';
+import 'package:flutter_gym_app/ui/statistic.dart';
 import 'package:flutter_gym_app/ui/trainingTypePage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -104,6 +105,9 @@ class _HomePageState extends State<HomePage> {
             appBar: AppBar(
               centerTitle: true,
               title: Text("Days"),
+              leading: IconButton(icon: Icon(Icons.stacked_bar_chart), onPressed: (){
+                Get.to(Statistic());
+              }),
             ),
             body: Consumer<DBDayProvider>(
               builder: (_, value, child) {

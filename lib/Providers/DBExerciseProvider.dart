@@ -21,6 +21,14 @@ class DBExerciseProvider extends ChangeNotifier {
     fillList(listOfexcersise);
   }
 
+  
+   getAllExercises2() async {
+    List<Map<String, dynamic>> rows =
+        await DBExerciseHelper.dbexerciseHelper.getAllexerciseDataFromDatabase2();
+    List<Exercise> listOfexcersise = rows.map((e) => Exercise.fromMap(e)).toList();
+    fillList(listOfexcersise);
+  }
+
 getOneexerciseFromDatabase(int exId,int day_id)async{
  return await DBExerciseHelper.dbexerciseHelper.getOneexerciseFromDatabase(exId,day_id);
 }

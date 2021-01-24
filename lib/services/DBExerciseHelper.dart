@@ -65,6 +65,14 @@ class DBExerciseHelper {
       print(e);
     }
   }
+  Future<List<Map<String, dynamic>>> getAllexerciseDataFromDatabase2() async {
+    try {
+      List<Map<String, dynamic>> allexercise = await database.query(exercisetable);
+      return allexercise;
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
 
   getOneexerciseFromDatabase(int exId,int day_id) async {
     try {
