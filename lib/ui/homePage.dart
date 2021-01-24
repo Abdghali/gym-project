@@ -29,6 +29,7 @@ class _HomePageState extends State<HomePage> {
           day_id: dayId,
           done: 0,
           burnsCalories: 0.0,
+          wight: 0.0,
           foodCalorise: 0.0,
           reachedNumber: 0,
           targetNumber: 0),
@@ -37,6 +38,7 @@ class _HomePageState extends State<HomePage> {
           day_id: dayId,
           done: 0,
           burnsCalories: 0.0,
+          wight: 0.0,
           foodCalorise: 0.0,
           reachedNumber: 0,
           targetNumber: 0),
@@ -45,6 +47,7 @@ class _HomePageState extends State<HomePage> {
           day_id: dayId,
           done: 0,
           burnsCalories: 0.0,
+          wight: 0.0,
           foodCalorise: 0.0,
           reachedNumber: 0,
           targetNumber: 0),
@@ -53,6 +56,7 @@ class _HomePageState extends State<HomePage> {
           day_id: dayId,
           done: 0,
           burnsCalories: 0.0,
+          wight: 0.0,
           foodCalorise: 0.0,
           reachedNumber: 0,
           targetNumber: 0),
@@ -61,6 +65,7 @@ class _HomePageState extends State<HomePage> {
           day_id: dayId,
           done: 0,
           burnsCalories: 0.0,
+          wight: 0.0,
           foodCalorise: 0.0,
           reachedNumber: 0,
           targetNumber: 0),
@@ -69,6 +74,7 @@ class _HomePageState extends State<HomePage> {
           day_id: dayId,
           done: 0,
           burnsCalories: 0.0,
+          wight: 0.0,
           foodCalorise: 0.0,
           reachedNumber: 0,
           targetNumber: 0),
@@ -113,8 +119,7 @@ class _HomePageState extends State<HomePage> {
                               .setwight(value.dayes[index].weight);
                           dynamic values = await context
                               .read<DBExerciseProvider>()
-                              .isExsisteInDatabase(
-                                  value.dayes[index].id);
+                              .isExsisteInDatabase(value.dayes[index].id);
                           print(values);
                           if (values == 0) {
                             await initExercises(value.dayes[index].id);

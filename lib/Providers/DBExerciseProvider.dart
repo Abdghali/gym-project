@@ -21,8 +21,8 @@ class DBExerciseProvider extends ChangeNotifier {
     fillList(listOfexcersise);
   }
 
-getOneexerciseFromDatabase(int dayId)async{
- return await DBExerciseHelper.dbexerciseHelper.getOneexerciseFromDatabase(dayId);
+getOneexerciseFromDatabase(int exId,int day_id)async{
+ return await DBExerciseHelper.dbexerciseHelper.getOneexerciseFromDatabase(exId,day_id);
 }
 isExsisteInDatabase(int dayId)async{
  return await DBExerciseHelper.dbexerciseHelper.isExsisteInDatabase(dayId);
@@ -30,8 +30,8 @@ isExsisteInDatabase(int dayId)async{
 
 
 updateExercise(Exercise exercise) async {
-    await  DBExerciseHelper.dbexerciseHelper.updateDataInDatabase(exercise);
-   // getAllExercises();
+    await  DBExerciseHelper.dbexerciseHelper.updateEXerciseDataInDatabase(exercise);
+   getAllExercises(exercise.day_id);
   }
 
  deleteExercise(Exercise exercise) async {

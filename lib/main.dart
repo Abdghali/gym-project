@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gym_app/Providers/DBDayProvider.dart';
 import 'package:flutter_gym_app/Providers/DBExerciseProvider.dart';
+import 'package:flutter_gym_app/Providers/exercissDetailsCounterProvider.dart';
 import 'package:flutter_gym_app/Providers/trainingPageCounter.dart';
 import 'package:flutter_gym_app/services/DBExerciseHelper.dart';
 import 'package:flutter_gym_app/services/DBHelper.dart';
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
       ),
       ChangeNotifierProvider<TainingPageCounterProvider>(
               create: (_) => TainingPageCounterProvider(),
+            ),
+      ChangeNotifierProvider<ExercissDetailsCounterProvider>(
+              create: (_) => ExercissDetailsCounterProvider(),
             ),
         ],
           child: GetMaterialApp(

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gym_app/Providers/DBDayProvider.dart';
 import 'package:flutter_gym_app/Providers/DBExerciseProvider.dart';
+import 'package:flutter_gym_app/Providers/exercissDetailsCounterProvider.dart';
 import 'package:flutter_gym_app/Providers/trainingPageCounter.dart';
 import 'package:flutter_gym_app/models/day.dart';
 import 'package:flutter_gym_app/models/exercise.dart';
-import 'package:flutter_gym_app/services/DBExerciseHelper.dart';
 import 'package:flutter_gym_app/ui/exercisesDetailsPage.dart';
 import 'package:flutter_gym_app/ui/indecator.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -80,13 +80,42 @@ class _CustomeContainer1State extends State<CustomeContainer1> {
                 height: 515.h,
                 // color: Colors.greenAccent,
                 child: ListView.separated(
-                    itemBuilder: (context, index) =>
-                        InkWell(
-                          onTap: (){
-                            Get.to(ExercisesDetailsPage(widget.day_id,value.exercises[index].id));
-                          },
-                          
-                          child: CustomContainer(exercise: value.exercises[index])),
+                    itemBuilder: (context, index) => InkWell(
+                        onTap: () async {
+                          Map<String, dynamic> map = await context
+                              .read<DBExerciseProvider>()
+                              .getOneexerciseFromDatabase(
+                                  value.exercises[index].id, widget.day_id);
+                          Exercise exercise = Exercise.fromMap(map);
+                          await context
+                              .read<ExercissDetailsCounterProvider>()
+                              .setNumer(exercise.reachedNumber);
+                          await context
+                              .read<ExercissDetailsCounterProvider>()
+                              .settargiteNumber(exercise.targetNumber);
+                          await context
+                              .read<ExercissDetailsCounterProvider>()
+                              .setweight(exercise.wight);
+                          await context
+                              .read<ExercissDetailsCounterProvider>()
+                              .setcaloriesBurned(exercise.burnsCalories);
+                          await context
+                              .read<ExercissDetailsCounterProvider>()
+                              .setcaloriesFood(exercise.foodCalorise);
+                          await context
+                              .read<ExercissDetailsCounterProvider>()
+                              .setDone(exercise.done);
+                              print(await context
+                              .read<ExercissDetailsCounterProvider>()
+                              .setweight(exercise.wight));
+
+                          Get.to(ExercisesDetailsPage(
+                              widget.day_id,
+                              value.exercises[index].id,
+                              value.exercises[index].trainingName));
+                        },
+                        child:
+                            CustomContainer(exercise: value.exercises[index])),
                     separatorBuilder: (context, index) => Divider(),
                     itemCount: value.exercises.length),
               ),

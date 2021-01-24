@@ -17,7 +17,8 @@ class DBExerciseHelper {
   static String foodCalorise="foodCalorise";
   static String burnsCalories="burnsCalories";
   static String done="done";
-  static String exercisetable = 'exercisetable1';
+  static String wight="wight";
+  static String exercisetable = 'exercisetable4';
 
   Database database;
 
@@ -43,7 +44,7 @@ class DBExerciseHelper {
         '''CREATE TABLE $exercisetable (id INTEGER PRIMARY KEY AUTOINCREMENT,
         $day_id INTEGER,$trainingNam TEXT NOT NULL,
         $targetNumber INTEGER,$reachedNumber INTEGER,
-        $foodCalorise Double,$burnsCalories Double,$done INTEGER)''');
+        $foodCalorise Double,$burnsCalories Double,$done INTEGER,$wight Double)''');
   }
 
   insertInToDatabase(Exercise exercise) async {
@@ -65,17 +66,17 @@ class DBExerciseHelper {
     }
   }
 
-  getOneexerciseFromDatabase(int dayId) async {
+  getOneexerciseFromDatabase(int exId,int day_id) async {
     try {
       List<Map<String, dynamic>> listResult = await database.query(exercisetable,
-          where: '$day_id=?',
-          whereArgs: [day_id],
+          where: 'id=? and $day_id=?',
+          whereArgs: [exId,day_id],
           // columns: [name, age, gender],
           distinct: true,
           limit: 1);
       Map<String, dynamic> result =
           listResult != null ? listResult.first : null;
-      print(result);
+return result;
     } on Exception catch (e) {
       print(e);
     }
@@ -101,9 +102,11 @@ class DBExerciseHelper {
     database.delete(exercisetable, where: 'id=?', whereArgs: [allexerciseId]);
   }
 
-  updateDataInDatabase(Exercise exercise) {
-    database.update(exercisetable, exercise.toMap(), where: 'id=?', whereArgs: [exercise.id]);
+  updateEXerciseDataInDatabase(Exercise exercise) {
+    database.update(exercisetable, exercise.toMap(), where: 'id=? and $day_id=?', whereArgs: [exercise.id,exercise.day_id]);
+
   }
+   
 
   deleteAllFromDatabase() {
     database.delete(exercisetable);
