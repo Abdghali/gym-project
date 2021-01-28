@@ -151,7 +151,7 @@ class CustomContainer extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage('assets/images/logo2.png'))),
+                        image: AssetImage(exercise.url)??AssetImage('assets/images/logo2.png'))),
               ),
               SizedBox(
                 width: 20.w,

@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
           wight: 0.0,
           foodCalorise: 0.0,
           reachedNumber: 0,
-          targetNumber: 0),
+          targetNumber: 0,url: 'assets/images/back.jpg'),
       Exercise(
           trainingName: "Leg ",
           day_id: dayId,
@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
           wight: 0.0,
           foodCalorise: 0.0,
           reachedNumber: 0,
-          targetNumber: 0),
+          targetNumber: 0,url: 'assets/images/leg.jpg'),
       Exercise(
           trainingName: "Shoulders",
           day_id: dayId,
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
           wight: 0.0,
           foodCalorise: 0.0,
           reachedNumber: 0,
-          targetNumber: 0),
+          targetNumber: 0,url: 'assets/images/shoulder.jpg'),
       Exercise(
           trainingName: "Chest",
           day_id: dayId,
@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
           wight: 0.0,
           foodCalorise: 0.0,
           reachedNumber: 0,
-          targetNumber: 0),
+          targetNumber: 0,url: 'assets/images/chest.jpg'),
       Exercise(
           trainingName: "Arm  ",
           day_id: dayId,
@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
           wight: 0.0,
           foodCalorise: 0.0,
           reachedNumber: 0,
-          targetNumber: 0),
+          targetNumber: 0,url: 'assets/images/arm.jpg'),
       Exercise(
           trainingName: "Cardio",
           day_id: dayId,
@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
           wight: 0.0,
           foodCalorise: 0.0,
           reachedNumber: 0,
-          targetNumber: 0),
+          targetNumber: 0,url: 'assets/images/cardio.jpg'),
     ];
     await context.read<DBExerciseProvider>().insertIntoDatabase(exxersises[0]);
     await context.read<DBExerciseProvider>().insertIntoDatabase(exxersises[1]);

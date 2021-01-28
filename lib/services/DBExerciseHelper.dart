@@ -18,6 +18,7 @@ class DBExerciseHelper {
   static String burnsCalories="burnsCalories";
   static String done="done";
   static String wight="wight";
+  static String url="url";
   static String exercisetable = 'exercisetable4';
 
   Database database;
@@ -44,7 +45,7 @@ class DBExerciseHelper {
         '''CREATE TABLE $exercisetable (id INTEGER PRIMARY KEY AUTOINCREMENT,
         $day_id INTEGER,$trainingNam TEXT NOT NULL,
         $targetNumber INTEGER,$reachedNumber INTEGER,
-        $foodCalorise Double,$burnsCalories Double,$done INTEGER,$wight Double)''');
+        $foodCalorise Double,$burnsCalories Double,$done INTEGER,$wight Double ,$url TEXT)''');
   }
 
   insertInToDatabase(Exercise exercise) async {

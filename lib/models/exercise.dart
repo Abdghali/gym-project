@@ -10,7 +10,8 @@ class Exercise {
   double burnsCalories;
   int done;
   double wight;
-  Exercise({ this.id,this.day_id,this.trainingName,this.targetNumber,this.reachedNumber,this.foodCalorise,this.burnsCalories,this.done,this.wight});
+  String url;
+  Exercise({ this.id,this.day_id,this.trainingName,this.targetNumber,this.reachedNumber,this.foodCalorise,this.burnsCalories,this.done,this.wight,this.url});
 
 Exercise.fromMap(Map<String, dynamic> map) {
     this.id = map[DBExerciseHelper.id];
@@ -22,6 +23,7 @@ Exercise.fromMap(Map<String, dynamic> map) {
     this.burnsCalories = map[DBExerciseHelper.burnsCalories];
     this.done = map[DBExerciseHelper.done];
     this.wight = map[DBExerciseHelper.wight];
+    this.url = map[DBExerciseHelper.url];
   }
 
   Map<String, dynamic> toMap() {
@@ -33,7 +35,9 @@ Exercise.fromMap(Map<String, dynamic> map) {
       DBExerciseHelper.foodCalorise: foodCalorise,
       DBExerciseHelper.burnsCalories: burnsCalories,
       DBExerciseHelper.done: done,
-      DBExerciseHelper.wight: wight   };
+      DBExerciseHelper.wight: wight ,
+      DBExerciseHelper.url: url ,
+        };
   }
 
 
