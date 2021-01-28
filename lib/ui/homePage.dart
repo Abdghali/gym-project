@@ -165,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                     literOfWater: 0.0);
                 await context.read<DBDayProvider>().insertIntoDatabase(day);
                 Fluttertoast.showToast(
-                    msg: "Added successfully",
+                    msg: translator.translate("Added_successfully"),
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.BOTTOM,
                     timeInSecForIosWeb: 1,

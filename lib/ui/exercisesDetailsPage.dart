@@ -5,6 +5,7 @@ import 'package:flutter_gym_app/models/exercise.dart';
 import 'package:flutter_gym_app/utilities/customTextStyle.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 
 class ExercisesDetailsPage extends StatefulWidget {
@@ -24,7 +25,7 @@ class _ExercisesDetailsPageState extends State<ExercisesDetailsPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Exercise Details Page'),
+        title: Text(translator.translate("Exercise_Details_Page")),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -35,7 +36,7 @@ class _ExercisesDetailsPageState extends State<ExercisesDetailsPage> {
             Consumer<ExercissDetailsCounterProvider>(
                 builder: (_, value, child) {
               return CustomeContainer1(
-                title: 'reached number :',
+                title:translator.translate("reached_number"),
                 increase: value.numberIncrease,
                 decrease: value.numberDecrease,
                 textEditingController:
@@ -50,7 +51,7 @@ class _ExercisesDetailsPageState extends State<ExercisesDetailsPage> {
             Consumer<ExercissDetailsCounterProvider>(
                 builder: (_, value, child) {
               return CustomeContainer1(
-                title: 'Tagite Number :',
+                title: translator.translate("Targite_Number"),
                 increase: value.targiteNumberIncrease,
                 decrease: value.targiteNumberDecrease,
                 textEditingController:
@@ -65,7 +66,7 @@ class _ExercisesDetailsPageState extends State<ExercisesDetailsPage> {
             Consumer<ExercissDetailsCounterProvider>(
                 builder: (_, value, child) {
               return CustomeContainer1(
-                title: "Thee weight :",
+                title:translator.translate("The_weight"),
                 increase: value.weightIncrease,
                 decrease: value.weightDecrease,
                 textEditingController:
@@ -80,7 +81,7 @@ class _ExercisesDetailsPageState extends State<ExercisesDetailsPage> {
             Consumer<ExercissDetailsCounterProvider>(
                 builder: (_, value, child) {
               return CustomeContainer1(
-                title: "Calories burned :",
+                title: translator.translate("Calories_burned"),
                 increase: value.caloriesBurnedIncrease,
                 decrease: value.caloriesBurnedDecrease,
                 textEditingController:
@@ -95,7 +96,7 @@ class _ExercisesDetailsPageState extends State<ExercisesDetailsPage> {
             Consumer<ExercissDetailsCounterProvider>(
                 builder: (_, value, child) {
               return CustomeContainer1(
-                title: "Food Calories :",
+                title:translator.translate("Food_Calories"),
                 increase: value.caloriesFoodBIncrease,
                 decrease: value.caloriesFoodDecrease,
                 textEditingController:
@@ -108,7 +109,7 @@ class _ExercisesDetailsPageState extends State<ExercisesDetailsPage> {
               height: 60.h,
             ),
             CustomeButton(
-              title: 'Save',
+              title: translator.translate("Save"),
               exercise: Exercise(
                   day_id: widget.dayId,
                   id: widget.exId,

@@ -7,8 +7,10 @@ import 'package:flutter_gym_app/models/day.dart';
 import 'package:flutter_gym_app/models/exercise.dart';
 import 'package:flutter_gym_app/ui/exercisesDetailsPage.dart';
 import 'package:flutter_gym_app/ui/indecator.dart';
+import 'package:flutter_gym_app/utilities/customTextStyle.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 
@@ -28,7 +30,7 @@ class _TrainingTypePageState extends State<TrainingTypePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Exercises"),
+        title: Text(translator.translate("Exercises")),
         centerTitle: true,
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
@@ -155,6 +157,7 @@ class CustomContainer extends StatelessWidget {
                 width: 20.w,
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "${exercise.trainingName}",
@@ -166,7 +169,7 @@ class CustomContainer extends StatelessWidget {
                   SizedBox(
                     height: 4.h,
                   ),
-                  Text("Tareget : ${exercise.targetNumber}    ",
+                  Text(translator.translate("Tareget")+ " : ${exercise.targetNumber}    ",
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 14,
@@ -327,7 +330,7 @@ class CustomContainer4 extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text("Liter of water"),
+                          Text(translator.translate("Liter_of_water")+" :",style: CustomTextStyle.getcustomeBouldStyle(),),
                           CustomeContainer3(
                             day: day,
                             type: 1,
@@ -343,7 +346,7 @@ class CustomContainer4 extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text("your weight"),
+                        Text(translator.translate("your weight")+" :",style: CustomTextStyle.getcustomeBouldStyle()),
                         CustomeContainer3(
                           day: day,
                           type: 2,
