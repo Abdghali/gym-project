@@ -125,25 +125,25 @@ class _StatisticState extends State<Statistic> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Indicator(
+                          Indicator2(
                             color: Colors.blueAccent,
                             size: 10,
                             isSquare: false,
                             text: translator.translate("last_Wight")+": $wight",
                           ),
-                          Indicator(
+                          Indicator2(
                             color: Colors.redAccent,
                             size: 10,
                             isSquare: false,
                             text:translator.translate("Liter_of_water")+ " : $water",
                           ),
-                          Indicator(
+                          Indicator2(
                             color: Colors.deepPurple,
                             size: 10,
                             isSquare: false,
                             text: translator.translate("Calories_burned")+" : $burndCalorise",
                           ),
-                          Indicator(
+                          Indicator2(
                             color: Colors.greenAccent,
                             size: 10,
                             isSquare: false,

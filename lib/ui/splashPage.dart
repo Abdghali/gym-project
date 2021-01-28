@@ -11,7 +11,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return SplashScreen(
-      seconds: 10,
+      seconds: 6,
       navigateAfterSeconds: HomePage(),
       title: Text(
         'Gym Excersise Progress',

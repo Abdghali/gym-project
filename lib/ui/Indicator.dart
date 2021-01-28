@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Indicator extends StatelessWidget {
+class Indicator2 extends StatelessWidget {
   final Color color;
   final String text;
   final bool isSquare;
   final double size;
   final Color textColor;
 
-  const Indicator({
+  const Indicator2({
     Key key,
     this.color,
     this.text,
