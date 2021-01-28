@@ -4,13 +4,15 @@ import 'package:flutter_gym_app/Providers/DBExerciseProvider.dart';
 import 'package:flutter_gym_app/Providers/trainingPageCounter.dart';
 import 'package:flutter_gym_app/models/day.dart';
 import 'package:flutter_gym_app/models/exercise.dart';
-import 'package:flutter_gym_app/services/DBExerciseHelper.dart';
 import 'package:flutter_gym_app/ui/statistic.dart';
 import 'package:flutter_gym_app/ui/trainingTypePage.dart';
+import 'package:flutter_gym_app/utilities/DialogPage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -104,10 +106,25 @@ class _HomePageState extends State<HomePage> {
         : Scaffold(
             appBar: AppBar(
               centerTitle: true,
-              title: Text("Days"),
-              leading: IconButton(icon: Icon(Icons.stacked_bar_chart), onPressed: (){
-                Get.to(Statistic());
-              }),
+              title: Text(translator.translate("Trainings")),
+              leading: IconButton(
+                  icon: Icon(Icons.stacked_bar_chart),
+                  onPressed: () {
+                    Get.to(Statistic());
+                  }),
+              actions: [
+                IconButton(
+                    icon: Icon(Icons.g_translate_outlined),
+                    onPressed: () {
+                      translator.setNewLanguage(
+                        context,
+                        newLanguage:
+                            translator.currentLanguage == 'ar' ? 'en' : 'ar',
+                        remember: true,
+                        restart: true,
+                      );
+                    }),
+              ],
             ),
             body: Consumer<DBDayProvider>(
               builder: (_, value, child) {
@@ -147,6 +164,14 @@ class _HomePageState extends State<HomePage> {
                     weight: 0,
                     literOfWater: 0.0);
                 await context.read<DBDayProvider>().insertIntoDatabase(day);
+                Fluttertoast.showToast(
+                    msg: "Added successfully",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.green[100],
+                    textColor: Colors.white,
+                    fontSize: 16.0);
               },
               child: Icon(Icons.add),
               backgroundColor: Colors.green,
@@ -204,7 +229,7 @@ class _CustomeContainerState extends State<CustomeContainer> {
                 color: Colors.red,
               ),
               onPressed: () async {
-                await context.read<DBDayProvider>().deleteDay(widget.day);
+                CustomeDialog.showMyDialog(context, widget.day);
               }),
         ],
       ),

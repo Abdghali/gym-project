@@ -4,6 +4,7 @@ import 'package:flutter_gym_app/Providers/exercissDetailsCounterProvider.dart';
 import 'package:flutter_gym_app/models/exercise.dart';
 import 'package:flutter_gym_app/utilities/customTextStyle.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class ExercisesDetailsPage extends StatefulWidget {
@@ -159,6 +160,14 @@ class CustomeButton extends StatelessWidget {
               done: 1,
             );
             await context.read<DBExerciseProvider>().updateExercise(ex);
+            Fluttertoast.showToast(
+                msg: "Saved successfully",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.green[100],
+                textColor: Colors.white,
+                fontSize: 16.0);
           }),
     );
   }

@@ -10,12 +10,20 @@ import 'package:flutter_gym_app/ui/homePage.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gym_app/ui/testPage.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
    await DBDayHelper.dbDayHelper.initDatabase();
    await DBExerciseHelper.dbexerciseHelper.initDatabase();
-  runApp(MyApp());
+
+  await translator.init(
+    localeDefault: LocalizationDefaultType.device,
+    languagesList: <String>['ar', 'en'],
+    assetsDirectory: 'assets/langs/',
+  ); // intialize
+
+  runApp(LocalizedApp(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

@@ -12,7 +12,6 @@ class Chart extends StatefulWidget {
 }
 
 class _ChartState extends State<Chart> {
-  
   List<PieChartSectionData> _sections = List<PieChartSectionData>();
   @override
   void initState() {
@@ -46,7 +45,7 @@ class _ChartState extends State<Chart> {
 
   @override
   Widget build(BuildContext context) {
-     ScreenUtil.init(context,
+    ScreenUtil.init(context,
         width: 360.0, height: 640.0, allowFontScaling: true);
     return Container(
       height: 250.h,

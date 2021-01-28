@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_gym_app/models/ChartItem.dart';
 
 class CahrtProvider extends ChangeNotifier {
-  Map<String, dynamic> mapCahrt;
+  List<ChartItem> mapCahrt;
 
-  setMapDatatCahrt(Map<String, dynamic> newMapCahrt) {
-    this.mapCahrt = newMapCahrt??[];
+  setListItemDatatCahrt(List<ChartItem> newItemsCahrt) {
+    this.mapCahrt = newItemsCahrt;
     notifyListeners();
   }
 }

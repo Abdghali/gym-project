@@ -7,6 +7,7 @@ import 'package:flutter_gym_app/models/day.dart';
 import 'package:flutter_gym_app/models/exercise.dart';
 import 'package:flutter_gym_app/ui/Indicator.dart';
 import 'package:flutter_gym_app/ui/pi_chart.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -20,6 +21,20 @@ class _StatisticState extends State<Statistic> {
   double water = 0.0;
   double burndCalorise = 0.0;
   double foodCalorise = 0.0;
+  double total = 0.0;
+  bool isloding = false;
+
+  islodingFalse() {
+    setState(() {
+      isloding = true;
+    });
+  }
+
+  calTotal() {
+    setState(() {
+      total = water + wight + burndCalorise + foodCalorise;
+    });
+  }
 
   getStatisticExcercise() async {
     await context.read<DBExerciseProvider>().getAllExercises2();
@@ -27,6 +42,8 @@ class _StatisticState extends State<Statistic> {
     getOviralStatisticCaloriseFood();
     getOviralWater();
     getLastWight();
+    calTotal();
+    islodingFalse();
   }
 
   getOviralStatisticCaloriseBurnds() async {
@@ -59,29 +76,30 @@ class _StatisticState extends State<Statistic> {
     List<Day> days = await context.read<DBDayProvider>().dayes;
     wight = days.last.weight ?? 0.0;
   }
-
+ 
   setMapCahrtData() async {
-    await context.read<CahrtProvider>().setMapDatatCahrt({
-      'last Wight': '$wight',
-      'Water': '$water',
-      'Burnd Clorise': '$burndCalorise',
-      'Food Clorise': '$foodCalorise',
-    });
+    await context.read<CahrtProvider>().setListItemDatatCahrt([
+      ChartItem(title: 'last Wight', value: wight+0.0),
+      ChartItem(title: 'Liter of Water', value: 200),
+      ChartItem(title: 'Burnd Clorise', value: 300),
+      ChartItem(title: 'Food Clorise', value: 400)
+    ]);
   }
+ 
 
   @override
   void initState() {
     getStatisticExcercise();
-    //setMapCahrtData();
+    setMapCahrtData();
   }
 
   @override
   Widget build(BuildContext context) {
-        ScreenUtil.init(context,
+    ScreenUtil.init(context,
         width: 360.0, height: 640.0, allowFontScaling: true);
     return Scaffold(
-       appBar: AppBar(
-        title: Text("Overal statistic"),
+      appBar: AppBar(
+        title: Text(translator.translate("Overal statistic")),
         centerTitle: true,
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
@@ -89,61 +107,55 @@ class _StatisticState extends State<Statistic> {
               Navigator.pop(context);
             }),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //   children: [
-            //     Text(
-            //       'Overal statistic',
-            //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            //     )
-            //   ],
-            // ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [Text("last Wight :  ",style: CustomTextStyle.getcustomeBouldStyle(),), Text("$wight",style: CustomTextStyle.getcustomeNormalStyle())],
-            // ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [Text("Water : ",style: CustomTextStyle.getcustomeBouldStyle()), Text("$water",style: CustomTextStyle.getcustomeNormalStyle())],
-            // ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [Text("Burnd Clorise: ",style: CustomTextStyle.getcustomeBouldStyle()), Text("$burndCalorise",style: CustomTextStyle.getcustomeNormalStyle())],
-            // ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [Text("Food Clorise : ",style: CustomTextStyle.getcustomeBouldStyle()), Text("$foodCalorise",style: CustomTextStyle.getcustomeNormalStyle())],
-            // ),
-
-            Chart([
-              ChartItem(title: 'last Wight', value: 100),
-              ChartItem(title: 'Water L', value: 200),
-              ChartItem(title: 'Burnd Clorise', value: 300),
-              ChartItem(title: 'Food Clorise', value: 400)
-            ]),
-Container(
-height: 100.h,
-//color: Colors.green,
-child: Column(
-  mainAxisAlignment: MainAxisAlignment.spaceAround,
-  children: [
-  Indicator(color: Colors.blueAccent,size: 10,isSquare: false,text: "last Wight",),
-  Indicator(color: Colors.redAccent,size: 10,isSquare: false,text: "Water L",),
-  Indicator(color: Colors.deepPurple,size: 10,isSquare: false,text: "Burnd Clorise",),
-  Indicator(color: Colors.greenAccent,size: 10,isSquare: false,text: "Food Clorise",),
-],),
-),
-
-
-          ],
-        ),
-      ),
+      body: isloding == false
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Chart(context.read<CahrtProvider>().mapCahrt),
+                  Container(
+                    height: 100.h,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Indicator(
+                            color: Colors.blueAccent,
+                            size: 10,
+                            isSquare: false,
+                            text: "last Wight : $wight",
+                          ),
+                          Indicator(
+                            color: Colors.redAccent,
+                            size: 10,
+                            isSquare: false,
+                            text: "Liter of Water : $water",
+                          ),
+                          Indicator(
+                            color: Colors.deepPurple,
+                            size: 10,
+                            isSquare: false,
+                            text: "Burnd Clorise : $burndCalorise",
+                          ),
+                          Indicator(
+                            color: Colors.greenAccent,
+                            size: 10,
+                            isSquare: false,
+                            text: "Food Clorise : $foodCalorise",
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
     );
   }
 }

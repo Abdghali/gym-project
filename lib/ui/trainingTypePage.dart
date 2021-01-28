@@ -8,6 +8,7 @@ import 'package:flutter_gym_app/models/exercise.dart';
 import 'package:flutter_gym_app/ui/exercisesDetailsPage.dart';
 import 'package:flutter_gym_app/ui/indecator.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 
@@ -105,7 +106,7 @@ class _CustomeContainer1State extends State<CustomeContainer1> {
                           await context
                               .read<ExercissDetailsCounterProvider>()
                               .setDone(exercise.done);
-                              print(await context
+                          print(await context
                               .read<ExercissDetailsCounterProvider>()
                               .setweight(exercise.wight));
 
@@ -404,6 +405,15 @@ class CustomeButton extends StatelessWidget {
               ' wight = ${await context.read<TainingPageCounterProvider>().weightCounter}');
 
 //customeAlertDialoge();
+
+          Fluttertoast.showToast(
+              msg: "submited successfully",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.green[100],
+              textColor: Colors.white,
+              fontSize: 16.0);
         },
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
