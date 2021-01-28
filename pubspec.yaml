@@ -24,8 +24,8 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.0
-  pie_chart: ^4.0.1
-  syncfusion_flutter_charts: ^18.4.35
+  fl_chart: ^0.12.2
+  
 
 dev_dependencies:
   flutter_test:
