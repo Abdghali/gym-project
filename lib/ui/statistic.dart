@@ -79,10 +79,10 @@ class _StatisticState extends State<Statistic> {
  
   setMapCahrtData() async {
     await context.read<CahrtProvider>().setListItemDatatCahrt([
-      ChartItem(title: 'last Wight', value: wight+0.0),
-      ChartItem(title: 'Liter of Water', value: 200),
-      ChartItem(title: 'Burnd Clorise', value: 300),
-      ChartItem(title: 'Food Clorise', value: 400)
+      ChartItem(title: 'last Wight', value: 50+0.0),
+      ChartItem(title: 'Liter of Water', value: 100),
+      ChartItem(title: 'Burnd Clorise', value: 150),
+      ChartItem(title: 'Food Clorise', value: 200)
     ]);
   }
  
